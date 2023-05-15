@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiService } from './api.service';
+import {AuthService} from './auth.service';
+import {CDP} from './cdp.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,9 @@ export class CartService {
 
   constructor(
     private _notification: NzNotificationService,
-    private _api: ApiService
+    private _api: ApiService,
+    private _authService: AuthService,
+    private _cdp: CDP
   ) {
     let localCartData = JSON.parse(localStorage.getItem('cart'));
     if (localCartData) this.cartData = localCartData;
@@ -31,9 +35,20 @@ export class CartService {
     });
   }
 
-  addProduct(params): void {
-    const { id, price, quantity, image, title, maxQuantity } = params;
-    const product = { id, price, quantity, image, title, maxQuantity };
+  async addProduct(params) {
+    const {id, price, quantity, image, title, maxQuantity, category} = params;
+    const product = {id, price, quantity, image, title, maxQuantity};
+    console.log(params);
+
+    await this._cdp.api.report('Product Added To Cart',
+      {
+        price,
+        category,
+        name: title,
+        quantity,
+        email: this._authService.getUser()?.email
+      }
+    );
 
     if (!this.isProductInCart(id)) {
       if (quantity) this.cartData.products.push(product);

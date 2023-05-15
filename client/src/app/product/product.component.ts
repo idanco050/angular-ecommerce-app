@@ -41,6 +41,7 @@ export class ProductComponent implements OnInit {
   quantity: number;
   showcaseImages: any[] = [];
   loading = false;
+  category: string;
 
   constructor(
     private _route: ActivatedRoute,
@@ -62,6 +63,7 @@ export class ProductComponent implements OnInit {
         this._product.getSingleProduct(productId).subscribe((product) => {
           console.log(product);
           this.product = product;
+          console.log(product);
           if (product.quantity === 0) this.quantity = 0;
           else this.quantity = 1;
 
@@ -81,6 +83,7 @@ export class ProductComponent implements OnInit {
       image: this.product.image,
       title: this.product.title,
       maxQuantity: this.product.quantity,
+      category: this.product.category,
     });
   }
 }

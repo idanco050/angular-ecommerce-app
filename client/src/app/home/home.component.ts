@@ -7,6 +7,7 @@ import {
 import { CartService } from '../services/cart.service';
 import { ProductService } from '../services/product.service';
 import { Products, Product } from '../shared/models/product.model';
+import {AdminService} from '../services/admin.service';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private adminService: AdminService
   ) {}
 
   public screenWidth: any;
@@ -80,5 +82,8 @@ export class HomeComponent implements OnInit {
         }
       );
     }, 500);
+  }
+  getElectronicsPopUpState(){
+    return this.adminService.getisEmailsShowen();
   }
 }

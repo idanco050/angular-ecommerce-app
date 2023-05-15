@@ -1,6 +1,6 @@
 const {
   loginValidation,
-  registerValidation,
+      registerValidation,
 } = require("../middleware/validation");
 const db = require("../database/db");
 const jwt = require("jsonwebtoken");
@@ -15,33 +15,33 @@ exports.loginUser = async (params) => {
 
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT * FROM users WHERE email = ? AND password = ?",
-      [email, hashedPassword],
-      (err, result) => {
-        if (err) {
-          reject({
-            data: err,
-            message: "Something went wrong, please try again",
-            statusCode: 400,
-          });
-        }
+        "SELECT * FROM users WHERE email = ? AND password = ?",
+        [email, hashedPassword],
+        (err, result) => {
+          if (err) {
+            reject({
+              data: err,
+              message: "Something went wrong, please try again",
+              statusCode: 400,
+            });
+          }
 
-        if (result.length === 0) {
-          reject({
-            message: "Wrong credentials, please try again",
-            statusCode: 400,
-          });
-        }
+          if (result.length === 0) {
+            reject({
+              message: "Wrong credentials, please try again",
+              statusCode: 400,
+            });
+          }
 
-        if (result.length > 0) {
-          const token = jwt.sign({ data: result }, "secret");
-          resolve({
-            message: "Logged in successfully",
-            data: result,
-            token,
-          });
+          if (result.length > 0) {
+            const token = jwt.sign({ data: result }, "secret");
+            resolve({
+              message: "Logged in successfully",
+              data: result,
+              token,
+            });
+          }
         }
-      }
     );
   });
 };
@@ -55,38 +55,39 @@ exports.registerUser = async (params) => {
 
   return new Promise((resolve, reject) => {
     db.query(
-      `SELECT email FROM users WHERE email = ?`,
-      [email],
-      (err, result) => {
-        if (result.length > 0) {
-          reject({
-            message: "Email address is in use, please try a different one",
-            statusCode: 400,
-          });
-        } else if (result.length === 0) {
-          db.query(
-            `INSERT INTO users (fname, email, password) VALUES (?,?,?)`,
-            [fullName, email, hashedPassword],
-            (err, result) => {
-              if (err) {
-                reject({
-                  message: "Something went wrong, please try again",
-                  statusCode: 400,
-                  data: err,
-                });
-              } else {
-                const token = jwt.sign({ data: result }, "secret");
-                resolve({
-                  data: result,
-                  message: "You have successfully registered.",
-                  token: token,
-                  statusCode: 200,
-                });
-              }
-            }
-          );
+        `SELECT email FROM users WHERE email = ?`,
+        [email],
+        (err, result) => {
+          if (result.length > 0) {
+            reject({
+              message: "Email address is in use, please try a different one",
+              statusCode: 400,
+            });
+          } else if (result.length === 0) {
+            db.query(
+                `INSERT INTO users (fullName, email, password) VALUES (?,?,?)`,
+                [fullName, email, hashedPassword],
+                (err, result) => {
+                  if (err) {
+                    reject({
+                      message: "Something went wrong, please try again",
+                      statusCode: 400,
+                      data: err,
+                    });
+                  } else {
+                    const token = jwt.sign({ data: result }, "secret");
+                    resolve({
+                      data: result,
+                      message: "You have successfully registered.",
+                      token: token,
+                      statusCode: 200,
+                    });
+                  }
+                }
+            );
+          }
         }
-      }
     );
   });
 };
+

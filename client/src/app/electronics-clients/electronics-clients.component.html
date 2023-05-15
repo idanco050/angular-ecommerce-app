@@ -1,0 +1,9 @@
+<div class="popup-overlay">
+  <div class="popup">
+    <h2>Email List</h2>
+    <ul>
+      <li *ngFor="let email of emailList">{{ email }}</li>
+    </ul>
+    <button (click)="closeEmailList()">Close</button>
+  </div>
+</div>

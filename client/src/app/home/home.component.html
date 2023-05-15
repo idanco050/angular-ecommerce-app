@@ -3,6 +3,9 @@
     <div class="categories__header">
       <h2>Categories</h2>
     </div>
+   <div *ngIf="getElectronicsPopUpState()">
+    <app-electronics-clients></app-electronics-clients>
+   </div>
     <div class="categories__list">
       <swiper
         [zoom]="false"

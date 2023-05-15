@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -35,6 +35,8 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import {CDP} from "./services/cdp.service";
+import { ElectronicsClientsComponent } from './electronics-clients/electronics-clients.component';
 
 registerLocaleData(en);
 
@@ -52,6 +54,7 @@ registerLocaleData(en);
     HeaderComponent,
     FooterComponent,
     ProductCardComponent,
+    ElectronicsClientsComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +80,16 @@ registerLocaleData(en);
     authInterceptorProviders,
     AuthGuardService,
     { provide: NZ_I18N, useValue: en_US },
+    CDP,
+    {
+      provide: APP_INITIALIZER,
+      deps: [CDP],
+      useFactory: (cdp: CDP) => () => cdp.init('4_OhtEDcyQ_k5UJjEKDYPqYg','HOZwBx8qka3v94o2TKMpcg' ),
+      multi: true
+    },
+    {
+      provide: NZ_I18N, useValue: en_US
+    },
   ],
   bootstrap: [AppComponent],
 })

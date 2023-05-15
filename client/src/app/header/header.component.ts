@@ -3,6 +3,7 @@ import { HostListener } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import {AdminService} from '../services/admin.service';
 
 @Component({
   selector: 'app-header',
@@ -30,7 +31,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private _token: TokenStorageService,
     private _auth: AuthService,
-    private _cart: CartService
+    private _cart: CartService,
+    private adminService: AdminService
   ) {
     this.getScreenSize();
     this._auth.user.subscribe((user) => {
@@ -62,5 +64,13 @@ export class HeaderComponent implements OnInit {
   logout() {
     this._auth.logout();
     this.isMenuOpen = false;
+  }
+  adminClicked()
+  {
+    this.adminService.EmailsButtonClicked();
+  }
+  getActiveUserEmail()
+  {
+    return this._auth.getUser()?.email;
   }
 }

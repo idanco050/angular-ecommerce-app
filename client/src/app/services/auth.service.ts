@@ -10,10 +10,12 @@ import { TokenStorageService } from './token-storage.service';
 export class AuthService {
   private userSubject: BehaviorSubject<any>;
   public user: Observable<any>;
+  public isLoggedIn: boolean;
 
   constructor(private _api: ApiService, private _token: TokenStorageService) {
     this.userSubject = new BehaviorSubject<any>(this._token.getUser());
     this.user = this.userSubject.asObservable();
+    this.isLoggedIn = false;
   }
 
   getUser() {
