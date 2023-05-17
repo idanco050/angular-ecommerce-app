@@ -6,6 +6,9 @@
    <div *ngIf="getElectronicsPopUpState()">
     <app-electronics-clients></app-electronics-clients>
    </div>
+    <div *ngIf="getPremiumPopUpState()">
+     <app-premium-customers></app-premium-customers>
+    </div>
     <div class="categories__list">
       <swiper
         [zoom]="false"

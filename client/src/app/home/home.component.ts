@@ -27,6 +27,9 @@ export class HomeComponent implements OnInit {
     {
       name: 'Cameras',
     },
+    {
+      name: 'Shoes'
+    },
   ];
   loading = false;
   productPageCounter = 1;
@@ -84,6 +87,10 @@ export class HomeComponent implements OnInit {
     }, 500);
   }
   getElectronicsPopUpState(){
-    return this.adminService.getisEmailsShowen();
+    return this.adminService.getIsElectronicEmailsShown();
+  }
+  getPremiumPopUpState()
+  {
+    return this.adminService.getIsPremiumEmailShown();
   }
 }

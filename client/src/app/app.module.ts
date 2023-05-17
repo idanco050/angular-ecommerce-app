@@ -37,6 +37,7 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import {CDP} from "./services/cdp.service";
 import { ElectronicsClientsComponent } from './electronics-clients/electronics-clients.component';
+import { PremiumCustomersComponent } from './premium-customers/premium-customers.component';
 
 registerLocaleData(en);
 
@@ -55,6 +56,7 @@ registerLocaleData(en);
     FooterComponent,
     ProductCardComponent,
     ElectronicsClientsComponent,
+    PremiumCustomersComponent,
   ],
   imports: [
     BrowserModule,

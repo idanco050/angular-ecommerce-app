@@ -65,10 +65,15 @@ export class HeaderComponent implements OnInit {
     this._auth.logout();
     this.isMenuOpen = false;
   }
-  adminClicked()
+  adminClickedElectronics()
   {
-    this.adminService.EmailsButtonClicked();
+    this.adminService.electronicEmailsButtonClicked();
   }
+  adminClickedPremium()
+  {
+    this.adminService.premiumEmailsButtonClicked();
+  }
+
   getActiveUserEmail()
   {
     return this._auth.getUser()?.email;
